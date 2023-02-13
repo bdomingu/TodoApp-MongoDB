@@ -1,14 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 function Input({currentTask, setCurrentTask, submitTask}) {
+const [value, setValue] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    submitTask(value);
+    setValue('')
+  }
+
+  const handleOnChange = (e) => {
+    setValue(e.target.value)
+  }
+
   return (
     <div>
+      <form onSubmit={handleSubmit}>
         <input
         type='text'
-        value={currentTask}
-        onChange={(e) => setCurrentTask(e.target.value)}
+        value={value}
+        onChange={handleOnChange}
         />
-        <button onClick={() => submitTask(currentTask)}>Add</button>
+        <button disabled={!value} type='submit'>Add</button>
+        </form>
     </div>
   )
 }

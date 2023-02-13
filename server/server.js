@@ -61,21 +61,39 @@ app.delete('/delete/task/:id', (req, res) => {
     });
 });
 
-app.patch('/completed/tasks/:id', (req, res) => {
-    const taskId = req.params.id
-    const updatedTask = {completed: req.body.completed};
+app.patch('/completed/tasks', async (req, res) => {
+    try {
+    const taskIds = req.body.taskIds
+    const completed = req.body.completed;
 
-    Todo.findByIdAndUpdate(taskId, updatedTask, {new: true})
-        .then((task) => {
-            if (!task) {
-                return res.status(404).json({success: false, message: "Task not found"});
-            }
-            return res.status(200).json({success: true, task});
-        })
-        .catch((err) => {
-            return res.status(500).json({success: false, message: err.message});
-        });
-});
+    const result = await Todo.updateMany(
+        { _id: {$in: taskIds}},
+        { $set: {completed: completed}}
+    );
+
+    const updatedTasks = await Todo.find({_id: { $in: taskIds }});
+    res.json({result, updatedTasks });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error: "Error updating tasks"})
+    }
+})
+// app.patch('/completed/tasks/:id', (req, res) => {
+//     const taskId = req.params.id
+//     const updatedTask = {completed: req.body.completed};
+
+//     Todo.findByIdAndUpdate(taskId, updatedTask, {new: true})
+//         .then((task) => {
+//             if (!task) {
+//                 return res.status(404).json({success: false, message: "Task not found"});
+//             }
+//             return res.status(200).json({success: true, task});
+//         })
+//         .catch((err) => {
+//             return res.status(500).json({success: false, message: err.message});
+//         });
+// });
 
 app.listen(8000, () => {
     console.log(`Server is running on port 8000.`);

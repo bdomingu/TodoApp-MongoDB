@@ -6,7 +6,7 @@ function CompleteTasks({completedTasks, deleteTasks}) {
     <div>
         <h1>Completed Tasks</h1>
 
-          {completedTasks.map((completed) => {
+          {completedTasks?.map((completed) => {
     
             return(
             <>

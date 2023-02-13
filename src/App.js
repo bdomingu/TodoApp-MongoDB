@@ -9,7 +9,19 @@ import CompleteTasks from './components/CompleteTasks';
 function App() {
   const [tasks, setTasks] = useState([]);
   const [completedTasks, setCompletedTasks] = useState([]);
-  const [currentTask, setCurrentTask] = useState('')
+  const [currentTask, setCurrentTask] = useState('');
+  const [selectedTasks, setSelectedTasks] = useState([]);
+  
+  const handleTaskSelection = (e, task) => {
+    if (e.target.checked){
+      setSelectedTasks([...selectedTasks, task]);
+    } else {
+      setSelectedTasks(selectedTasks.filter(selectedTask => selectedTask._id !== task._id))
+    }
+    
+    
+  }
+
 
   useEffect(() => {
   const displayTasks = async () => {
@@ -64,29 +76,31 @@ function App() {
   }
 
   
-  const markComplete = (id) => {
+  const markComplete = async () => {
   
-    axios.patch(`http://localhost:8000/completed/tasks/${id}`, {completed: true})
-      .then((res) => {
-     
-        setTasks(prevTasks => prevTasks.filter(task => task._id !== id));
-        setCompletedTasks(prevCompletedTasks => [...prevCompletedTasks, tasks.find(task => task._id === id)])
-        
+   const response = await axios.patch('http://localhost:8000/completed/tasks/', 
+   {taskIds: selectedTasks.map(task => task._id),
+    completed: true
+    
     })
-    .catch(error => {
-      console.log(error)
-    })
+    const updatedTasks = await response.data.updatedTasks
+  
+    setCompletedTasks(prevCompletedTasks => [...prevCompletedTasks, ...updatedTasks])
+    setTasks(prevTasks => prevTasks.filter(task => !selectedTasks.includes(task)) )
+    console.log(updatedTasks)
+    setSelectedTasks([])
+    
   }
 
-  console.log(tasks)
-  console.log(completedTasks)
 
  
+ 
+    
   
   return (
     <div className="App">
      <Input  currentTask={currentTask} setCurrentTask={setCurrentTask} submitTask={submitTask}/>
-     <IncompleteTasks tasks={tasks} deleteTasks={deleteTasks} markComplete={markComplete}/>
+     <IncompleteTasks handleTaskSelection={handleTaskSelection} tasks={tasks} deleteTasks={deleteTasks} markComplete={markComplete}/>
      <CompleteTasks deleteTasks={deleteTasks} markComplete={markComplete} completedTasks={completedTasks}/>
     </div>
   );
