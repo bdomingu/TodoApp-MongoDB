@@ -14,14 +14,20 @@ const [value, setValue] = useState('');
   }
 
   return (
-    <div>
+    <div className='form-container'>
       <form onSubmit={handleSubmit}>
         <input
         type='text'
+        className='form-input'
+        placeholder='Enter a task...'
         value={value}
         onChange={handleOnChange}
         />
-        <button disabled={!value} type='submit'>Add</button>
+        <button 
+        className='form-button'
+        disabled={!value}
+        type='submit'
+         >Add</button>
         </form>
     </div>
   )

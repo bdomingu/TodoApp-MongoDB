@@ -98,11 +98,14 @@ function App() {
     
   
   return (
-    <div className="App">
-     <Input  currentTask={currentTask} setCurrentTask={setCurrentTask} submitTask={submitTask}/>
+    <div>
+     <Input currentTask={currentTask} setCurrentTask={setCurrentTask} submitTask={submitTask}/>
+    <div className='tasks-container'> 
      <IncompleteTasks handleTaskSelection={handleTaskSelection} tasks={tasks} deleteTasks={deleteTasks} markComplete={markComplete}/>
      <CompleteTasks deleteTasks={deleteTasks} markComplete={markComplete} completedTasks={completedTasks}/>
-    </div>
+     </div>
+     </div>
+   
   );
 }
 
