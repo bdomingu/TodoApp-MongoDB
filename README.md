@@ -1,7 +1,7 @@
-#Todo App
+# Todo App
 This is a simple Todo app built with React, JavaScript, Express, and MongoDB. The app allows users to add tasks, mark them as completed, and delete tasks. It is also responsive, meaning it can be used on both desktop and mobile devices.
 
-##**Getting Started**
+## **Getting Started**
 To run the app, you will need to have Node.js and MongoDB installed on your machine. Once you have those installed, follow these steps:
 
 Clone the repository to your local machine using git clone https://github.com/your-username/react-todo-app.git.
