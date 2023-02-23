@@ -26,8 +26,10 @@ To delete a task, click the trash button next to the task. The task will be remo
 
 ## **Technologies Used**
 This app was built using the following technologies:
-
-React
 JavaScript
 Express
 MongoDB
+![Screenshot from 2023-02-23 13-51-57](https://user-images.githubusercontent.com/92413990/221029752-c76360ed-6789-46ea-b738-d746b131a2b4.png)
+![Screenshot from 2023-02-23 13-53-16](https://user-images.githubusercontent.com/92413990/221029798-8b26e4b7-4a2b-468e-a178-306f766454c9.png)
+
+
