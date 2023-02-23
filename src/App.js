@@ -48,7 +48,6 @@ function App() {
       title: title, 
       completed: false
     };
-
   
     axios.post('http://localhost:8000/task/create', task).then(response => {
       const task = response.data;

@@ -1,6 +1,5 @@
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { fatrash } from '@fortawesome/free-solid-svg-icons';
+
 
 function IncompleteTasks({tasks, deleteTasks, markComplete, handleTaskSelection}) {
 

@@ -46,7 +46,7 @@ body {
   display: flex;
   justify-content: center;
   gap: 100px;
-  padding-top: 10px;
+  padding-top: 40px;
 }
 
 .todo-container {
@@ -101,6 +101,26 @@ li {
   color: rgb(33, 39, 26);
 }
 
+@media (max-width:767px){
+  .tasks-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .todo-container {
+    background-color:rgb(255,255,255);
+    border-radius: 5px;
+    width: 300px;
+    overflow: hidden;
+  }
+
+  .task-container {
+    padding: 20px;
+    height: 300px;
+    overflow-y: scroll; 
+  }
+}
 
 
 
