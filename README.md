@@ -67,5 +67,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 ### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This section has moved here: [https://facebo![Screenshot from 2023-02-23 13-51-57](https://user-images.githubusercontent.com/92413990/221028253-99b41f6e-9f1a-4191-8a4a-726615acce92.png)![Screenshot from 2023-02-23 13-53-16](https://user-images.githubusercontent.com/92413990/221028265-d6372663-b262-4f76-81e5-0435d9cd5f28.png)
+
+ok.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 # TodoApp-MongoDB
