@@ -1,7 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 
+/* Work on the Login Section Next*/
 
 const app = express();
 
@@ -18,6 +20,54 @@ db.once('open', function() {
     console.log('Connected to MongoDB')
 });
 
+/////////////////////////////////////Register Section///////////////////////////////////////////////
+const userSchema = new mongoose.Schema({
+    username: {
+        type: String, 
+        required: true
+    },
+    email: {
+        type: String, 
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: true
+    }
+}, {
+    timestamps: true
+});
+
+const User = mongoose.model('User', userSchema);
+
+app.post('/register', async (req, res) => {
+    const { username, email, password } = req.body;
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    try {
+        let user = await User.findOne({ email });
+
+        if (user) {
+            return res.status(400).send({error:'Email already exists'});
+        }
+
+        user = new User({
+            username,
+            email,
+            password: hashedPassword
+        })
+
+        await user.save();
+
+        res.json({msg: 'User registered succesfully'});
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
+});
+//////////////////////////////////////// Todo Section ///////////////////////////////////////////////////
 const todoSchema = new mongoose.Schema({
     title: String,
     completed: Boolean

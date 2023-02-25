@@ -4,6 +4,7 @@ import axios from 'axios';
 import Input from './components/Input';
 import IncompleteTasks from './components/IncompleteTasks';
 import CompleteTasks from './components/CompleteTasks';
+import Register from './components/Register';
 
 
 function App() {
@@ -74,6 +75,7 @@ function App() {
     })
   }
 
+
   
   const markComplete = async () => {
   
@@ -98,11 +100,12 @@ function App() {
   
   return (
     <div>
-     <Input currentTask={currentTask} setCurrentTask={setCurrentTask} submitTask={submitTask}/>
+    <Register/>
+     {/* <Input currentTask={currentTask} setCurrentTask={setCurrentTask} submitTask={submitTask}/>
     <div className='tasks-container'> 
      <IncompleteTasks handleTaskSelection={handleTaskSelection} tasks={tasks} deleteTasks={deleteTasks} markComplete={markComplete}/>
      <CompleteTasks deleteTasks={deleteTasks} markComplete={markComplete} completedTasks={completedTasks}/>
-     </div>
+     </div> */}
      </div>
    
   );
