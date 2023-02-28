@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import axios from 'axios';
+import {useNavigate} from 'react-router-dom'
+
 
 function Authentication() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    // const [error, setError] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
+    const navigate = useNavigate();
 
     const url = 'http://localhost:8000';
 
@@ -24,11 +27,11 @@ function Authentication() {
             console.log(response.data)
         })
         .catch(error => {
-            setError(error.response.data.error)
+            // setError(error.response.data.error)
         })
     }
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault()
 
         const registeredUser = {
@@ -36,14 +39,13 @@ function Authentication() {
             password: userPassword
         }
 
-
-        axios.post('http://localhost:8000/login', registeredUser).then(response => {
-            console.log(response.data);
-        })
-        .catch(error => {
-            console.error(error)
-            setError(error.response)
-        })
+        const response = await axios.post('http://localhost:8000/login', registeredUser)
+        
+        if (response.status === 200) {
+            navigate('/todos')
+        }
+        
+        
     }
    
 

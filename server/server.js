@@ -120,14 +120,17 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.post('/login',
-passport.authenticate('local', {
-    failureRedirect: '/',
-}), (req, res) => {
-    // res.send({message: 'user logged in succesfully'})
-    console.log('User logged in succesfully');
-    res.redirect('http://localhost:3000/todos');
-    
+passport.authenticate('local'), (req, res) => {
+   res.json(req.user);
 });
+
+app.get('/logout', (req, res) => {
+    req.logout(() => {
+        res.status(200).send({message: 'User logged out succesfully'})
+    }) 
+  });
+
+
  
 
 

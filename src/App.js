@@ -6,6 +6,7 @@ import IncompleteTasks from './components/IncompleteTasks';
 import CompleteTasks from './components/CompleteTasks';
 import Authentication from './components/Authentication';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import Logout from './components/Logout';
 
 
 function App() {
@@ -98,6 +99,7 @@ function App() {
     return (
       <>
         <Input currentTask={currentTask} setCurrentTask={setCurrentTask} submitTask={submitTask}/>
+        <Logout />
         <div className='tasks-container'> 
           <IncompleteTasks handleTaskSelection={handleTaskSelection} tasks={tasks} deleteTasks={deleteTasks} markComplete={markComplete}/>
           <CompleteTasks deleteTasks={deleteTasks} markComplete={markComplete} completedTasks={completedTasks}/>
