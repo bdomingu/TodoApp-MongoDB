@@ -4,7 +4,8 @@ import axios from 'axios';
 import Input from './components/Input';
 import IncompleteTasks from './components/IncompleteTasks';
 import CompleteTasks from './components/CompleteTasks';
-import Register from './components/Register';
+import Authentication from './components/Authentication';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 
 
 function App() {
@@ -93,20 +94,30 @@ function App() {
     
   }
 
+  function TodoContainer() {
+    return (
+      <>
+        <Input currentTask={currentTask} setCurrentTask={setCurrentTask} submitTask={submitTask}/>
+        <div className='tasks-container'> 
+          <IncompleteTasks handleTaskSelection={handleTaskSelection} tasks={tasks} deleteTasks={deleteTasks} markComplete={markComplete}/>
+          <CompleteTasks deleteTasks={deleteTasks} markComplete={markComplete} completedTasks={completedTasks}/>
+        </div>
+      </>
+    );
+  }
 
  
  
     
   
   return (
-    <div>
-    <Register/>
-     {/* <Input currentTask={currentTask} setCurrentTask={setCurrentTask} submitTask={submitTask}/>
-    <div className='tasks-container'> 
-     <IncompleteTasks handleTaskSelection={handleTaskSelection} tasks={tasks} deleteTasks={deleteTasks} markComplete={markComplete}/>
-     <CompleteTasks deleteTasks={deleteTasks} markComplete={markComplete} completedTasks={completedTasks}/>
-     </div> */}
-     </div>
+    <Router>
+      <Routes>
+        <Route exact path='/' element={<Authentication/>}/>
+        <Route path='/todos' element={<TodoContainer/>}/>
+      </Routes>
+    </Router>
+  
    
   );
 }

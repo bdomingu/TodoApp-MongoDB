@@ -2,8 +2,13 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+import passport from 'passport';
+import LocalStrategy from 'passport-local';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
 
-/* Work on the Login Section Next*/
+
+
 
 const app = express();
 
@@ -67,6 +72,65 @@ app.post('/register', async (req, res) => {
         res.status(500).send('Server error');
     }
 });
+
+///////////////////////////////Login Section //////////////////////////////////////////////////////////
+passport.use(new LocalStrategy(
+    {
+        usernameField: 'email'
+    },
+    function(email, password, done) {
+        console.log(email, password)
+
+        User.findOne({email: email}, function (err, user) {
+            if (err) { return done(err); }
+            if (!user) { return done(null, false, {message:'Incorrect email or password.'}); }
+            bcrypt.compare(password, user.password, function(err, res) {
+                if (res) {
+                    return done(null, user);
+                } else {
+                    return done(null, false, {message: 'Incorrect email or password'});
+                }
+            });
+        });
+}));
+
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+    try{
+        const user = await User.findById(id);
+        done(null, user);
+    } catch (err) {
+        done(err);
+    }
+});
+
+app.use(express.urlencoded({extended:true}));
+
+app.use(session({
+    secret:'secret',
+    resave:false,
+    saveUninitialized: false,
+   
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.post('/login',
+passport.authenticate('local', {
+    failureRedirect: '/',
+}), (req, res) => {
+    // res.send({message: 'user logged in succesfully'})
+    console.log('User logged in succesfully');
+    res.redirect('http://localhost:3000/todos');
+    
+});
+ 
+
+
 //////////////////////////////////////// Todo Section ///////////////////////////////////////////////////
 const todoSchema = new mongoose.Schema({
     title: String,
@@ -148,3 +212,8 @@ app.patch('/completed/tasks', async (req, res) => {
 app.listen(8000, () => {
     console.log(`Server is running on port 8000.`);
 });
+
+
+/* Need to figure out how to logout a user 
+    Need to figure out how to redirect users to the correct pages once a user is logged in/out
+    Might need to look at doing that from the client side instead of the server side. */
