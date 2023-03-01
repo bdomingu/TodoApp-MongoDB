@@ -4,7 +4,7 @@ import axios from 'axios';
 import Input from './components/Input';
 import IncompleteTasks from './components/IncompleteTasks';
 import CompleteTasks from './components/CompleteTasks';
-import Authentication from './components/Authentication';
+import Login from './components/Login';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Logout from './components/Logout';
 
@@ -14,9 +14,10 @@ function App() {
   const [completedTasks, setCompletedTasks] = useState([]);
   const [currentTask, setCurrentTask] = useState('');
   const [selectedTasks, setSelectedTasks] = useState([]);
+  const [token, setToken] = useState(localStorage.getItem('token'))
   
-  const token = localStorage.getItem('token');
- 
+  
+  console.log(token)
 
   const handleTaskSelection = (e, task) => {
     if (e.target.checked){
@@ -31,6 +32,7 @@ function App() {
 
   useEffect(() => {
   const displayTasks = async () => {
+  
     try {
       const response = await axios.get('http://localhost:8000/tasks', {
         headers: {
@@ -50,8 +52,6 @@ function App() {
 
   displayTasks()
 }, [token])
-
-console.log(tasks)
 
 
 
@@ -110,7 +110,7 @@ console.log(tasks)
     return (
       <>
         <Input currentTask={currentTask} setCurrentTask={setCurrentTask} submitTask={submitTask}/>
-        <Logout />
+        <Logout setTasks={setTasks}/>
         <div className='tasks-container'> 
           <IncompleteTasks handleTaskSelection={handleTaskSelection} tasks={tasks} deleteTasks={deleteTasks} markComplete={markComplete}/>
           <CompleteTasks deleteTasks={deleteTasks} markComplete={markComplete} completedTasks={completedTasks}/>
@@ -126,7 +126,7 @@ console.log(tasks)
   return (
     <Router>
       <Routes>
-        <Route exact path='/' element={<Authentication/>}/>
+        <Route exact path='/' element={<Login setToken={setToken}/>}/>
         <Route path='/todos' element={<TodoContainer/>}/>
       </Routes>
     </Router>
