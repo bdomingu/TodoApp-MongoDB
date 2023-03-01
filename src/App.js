@@ -7,6 +7,7 @@ import CompleteTasks from './components/CompleteTasks';
 import Login from './components/Login';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Logout from './components/Logout';
+import Register from './components/Register';
 
 
 function App() {
@@ -127,6 +128,7 @@ function App() {
     <Router>
       <Routes>
         <Route exact path='/' element={<Login setToken={setToken}/>}/>
+        <Route path='/register' element={<Register/>}/>
         <Route path='/todos' element={<TodoContainer/>}/>
       </Routes>
     </Router>

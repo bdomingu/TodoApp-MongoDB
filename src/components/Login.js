@@ -13,7 +13,7 @@ function Login({setToken}) {
     const [userPassword, setUserPassword] = useState('');
     const navigate = useNavigate();
 
-    const url = 'http://localhost:8000';
+    
 
 
 
@@ -62,6 +62,7 @@ function Login({setToken}) {
             </label>
             <button type='submit'>Login</button>
         </form>
+        <p>Don't have an account?</p> <a href='/register'>Register here.</a>
     </div>
     </>
   )
