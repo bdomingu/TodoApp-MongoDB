@@ -3,11 +3,12 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import passport from 'passport';
+import jwt from 'jsonwebtoken';
 import LocalStrategy from 'passport-local';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 
-
+const secret = 'ilovepickles1235';
 
 
 const app = express();
@@ -119,9 +120,22 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.post('/login',
-passport.authenticate('local'), (req, res) => {
-   res.json(req.user);
+app.post('/login', (req, res, next) => {
+    passport.authenticate('local', {session: false}, (err, user, info) => {
+        if (err || !user){
+            return res.status(401).json({
+                message: 'Invalid username or password'
+        });
+    }
+    req.login(user, {session: false}, (err) => {
+        if (err) {
+            res.send(err);
+        }
+        const token = jwt.sign(user.toJSON(), secret);
+        return res.json({user, token});
+    });
+})(req, res)
+
 });
 
 app.get('/logout', (req, res) => {
@@ -131,25 +145,56 @@ app.get('/logout', (req, res) => {
   });
 
 
+
+//////////////////////////// Authentication /////////////////////////////////////
  
+const authenticateToken = (req, res, next) => {
+
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+  
+    if (token === null) return res.sendStatus(401);
+
+    jwt.verify(token, secret, (err, user) => {
+        if (err) return res.sendStatus(403);
+        req.user = user;
+       
+        next();
+    });
+}   
 
 
 //////////////////////////////////////// Todo Section ///////////////////////////////////////////////////
 const todoSchema = new mongoose.Schema({
-    title: String,
-    completed: Boolean
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    title: {
+        type: String,
+        required: true
+    },
+    completed: {
+        type: Boolean,
+        required: true
+    }
 });
 
 const Todo = mongoose.model('Todo', todoSchema);
 
-app.get('/tasks', (req, res) => {
-    Todo.find({}).then(todos => res.json(todos))
-        .catch(err => res.status(400).json('Error:' +err));
+app.get('/tasks', authenticateToken, (req, res) => {
+    if (req.user && req.user._id) {
+        Todo.find({userId: req.user._id}).then(todos => res.json(todos))
+          .catch(err => res.status(400).json('Error:' +err));
+      } else {
+        res.status(401).json({message: 'Unauthorized'});
+      }
+      
 });
 
-app.post('/task/create', (req, res) => {
+app.post('/tasks/create', authenticateToken, (req, res) => {
     const newTodo = new Todo({
-
+        userId:req.user._id,
         title: req.body.title,
         completed: req.body.completed
     });

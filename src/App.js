@@ -15,6 +15,9 @@ function App() {
   const [currentTask, setCurrentTask] = useState('');
   const [selectedTasks, setSelectedTasks] = useState([]);
   
+  const token = localStorage.getItem('token');
+ 
+
   const handleTaskSelection = (e, task) => {
     if (e.target.checked){
       setSelectedTasks([...selectedTasks, task]);
@@ -29,9 +32,13 @@ function App() {
   useEffect(() => {
   const displayTasks = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/tasks');
+      const response = await axios.get('http://localhost:8000/tasks', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       const tasks = response.data
-
+      console.log(tasks)
       setTasks(tasks.filter(task => !task.completed));
       setCompletedTasks(tasks.filter(task => task.completed));
 
@@ -42,25 +49,29 @@ function App() {
     }; 
 
   displayTasks()
-}, [])
+}, [token])
+
+console.log(tasks)
 
 
 
   const submitTask = (title) => {
+    
     const task = {
       title: title, 
       completed: false
     };
-  
-    axios.post('http://localhost:8000/task/create', task).then(response => {
-      const task = response.data;
+    
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+     axios.post('http://localhost:8000/tasks/create', task).then((response) =>{
+      console.log(response.data)
       setTasks([...tasks, task])
       setCurrentTask('')
-  
-    })
-    .catch(error => {
+     })
+    .catch((error) => {
       console.error(error);
-    })
+    });
   }
 
   const deleteTasks = (id) => {

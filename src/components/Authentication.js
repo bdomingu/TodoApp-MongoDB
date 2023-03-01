@@ -2,6 +2,10 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom'
 
+/* Figure out why the logout does not remove the token
+    Figure out why the tasks for specific users show until after refresh
+    Figure out why I cant check the little boxes
+*/
 
 function Authentication() {
     const [username, setUsername] = useState('');
@@ -40,7 +44,9 @@ function Authentication() {
         }
 
         const response = await axios.post('http://localhost:8000/login', registeredUser)
-        
+        const token = response.data.token
+    
+        localStorage.setItem('token', token);
         if (response.status === 200) {
             navigate('/todos')
         }

@@ -3,8 +3,12 @@ import {useNavigate} from 'react-router-dom'
 
 function Logout() {
     const navigate = useNavigate();
-
+    
     const handleLogout = async () => {
+        console.log(localStorage.getItem('token'))
+        localStorage.removeItem('token');
+        console.log(localStorage.getItem('token'))
+        
        const response = await axios.get('http://localhost:8000/logout')
        console.log(response.data)
        if (response.status === 200) {
