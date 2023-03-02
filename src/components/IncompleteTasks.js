@@ -2,15 +2,14 @@ import React from 'react'
 
 
 function IncompleteTasks({tasks, deleteTasks, markComplete, selectedTasks, setSelectedTasks}) {
-// console.log(tasks)
 
-console.log(selectedTasks)
 
- const handleTaskSelection = (task) => {
-    if(selectedTasks.includes(task._id)) {
-      setSelectedTasks(selectedTasks.filter((id) => id !== task._id));
+ const handleTaskSelection = (e, id) => {
+
+    if(e.target.checked) {
+      setSelectedTasks([...selectedTasks, id]);
     } else {
-      setSelectedTasks([...selectedTasks, task._id]);
+      setSelectedTasks(selectedTasks.filter((taskId) => taskId !== id));
     } 
   }
   
@@ -24,7 +23,7 @@ console.log(selectedTasks)
             <><li key={task._id}>
             <input 
             type="checkbox" 
-            onChange={() => handleTaskSelection(task)}
+            onChange={(e) => handleTaskSelection(e, task._id)}
             checked={selectedTasks.includes(task._id)}
             
              />

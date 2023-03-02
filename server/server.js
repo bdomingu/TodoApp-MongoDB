@@ -184,12 +184,15 @@ const Todo = mongoose.model('Todo', todoSchema);
 
 app.get('/tasks', authenticateToken, (req, res) => {
     if (req.user && req.user._id) {
-        Todo.find({userId: req.user._id}).then(todos => res.json(todos))
-          .catch(err => res.status(400).json('Error:' +err));
-      } else {
-        res.status(401).json({message: 'Unauthorized'});
-      }
-      
+        Todo.find({userId: req.user._id}, (err, data) =>{
+            if (err) {
+                console.error(err);
+                res.status(500).json({error:'Server error'});
+            } else {
+                res.status(200).send(data);
+            }
+        });
+    }
 });
 
 app.post('/tasks/create', authenticateToken, (req, res) => {
@@ -202,6 +205,7 @@ app.post('/tasks/create', authenticateToken, (req, res) => {
         if (error) {
             res.send(error);
         } else {
+            console.log(data)
             res.status(200).send(data);
         }
     });
