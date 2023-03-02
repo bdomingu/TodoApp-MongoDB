@@ -6,7 +6,7 @@ function Register() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const [registrationError, setRegistrationError] = useState('');
 
     const navigate = useNavigate();
 
@@ -31,10 +31,12 @@ function Register() {
 
         
         .catch(error => {
-            setError(error.response.data.error)
+            setRegistrationError(error.response.data.error)
             
         })
     }
+
+    
 
  
   return (
@@ -69,6 +71,7 @@ function Register() {
                       onChange={(e) => setPassword(e.target.value)} />
               </label>
               <button type='submit'>Register</button>
+              <p>{registrationError}</p>
               <p>Already have an account?</p> <a href='/'>Login Here</a>
 
           </form>

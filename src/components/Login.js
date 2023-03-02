@@ -2,15 +2,15 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom'
 
-/* 
-    Figure out why I cant check the little boxes
-*/
+
 
 function Login({setToken}) {
    
     // const [error, setError] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
+    const [loginError, setLoginError] = useState('')
+
     const navigate = useNavigate();
 
     
@@ -19,7 +19,7 @@ function Login({setToken}) {
 
     const handleLogin = async (e) => {
         e.preventDefault()
-
+        try {
         const registeredUser = {
             email:userEmail,
             password: userPassword
@@ -35,8 +35,12 @@ function Login({setToken}) {
         }
         
         console.log(token)
+        } catch (error) {
+            setLoginError(error.response.data.message)
+        }
     }
    
+    console.log(loginError)
 
   return (
     <>
@@ -62,6 +66,7 @@ function Login({setToken}) {
             </label>
             <button type='submit'>Login</button>
         </form>
+        <p>{loginError}</p>
         <p>Don't have an account?</p> <a href='/register'>Register here.</a>
     </div>
     </>

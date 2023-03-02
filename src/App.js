@@ -9,6 +9,11 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Logout from './components/Logout';
 import Register from './components/Register';
 
+/* Figure out why both tasks are being checked and the selected tasks are undefined unless i refresh. 
+    Figure out how to display the tasks as soon as they're completed.
+    Style?
+    Figure out the env for secret key for token
+*/
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -17,18 +22,7 @@ function App() {
   const [selectedTasks, setSelectedTasks] = useState([]);
   const [token, setToken] = useState(localStorage.getItem('token'))
   
-  
-  console.log(token)
-
-  const handleTaskSelection = (e, task) => {
-    if (e.target.checked){
-      setSelectedTasks([...selectedTasks, task]);
-    } else {
-      setSelectedTasks(selectedTasks.filter(selectedTask => selectedTask._id !== task._id))
-    }
-    
-    
-  }
+console.log(selectedTasks)
 
 
   useEffect(() => {
@@ -41,7 +35,7 @@ function App() {
         }
       });
       const tasks = response.data
-      console.log(tasks)
+     
       setTasks(tasks.filter(task => !task.completed));
       setCompletedTasks(tasks.filter(task => task.completed));
 
@@ -66,7 +60,7 @@ function App() {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
      axios.post('http://localhost:8000/tasks/create', task).then((response) =>{
-      console.log(response.data)
+      // console.log(response.data)
       setTasks([...tasks, task])
       setCurrentTask('')
      })
@@ -92,20 +86,25 @@ function App() {
 
   
   const markComplete = async () => {
-  
-   const response = await axios.patch('http://localhost:8000/completed/tasks/', 
-   {taskIds: selectedTasks.map(task => task._id),
-    completed: true
+    console.log(selectedTasks)
+   for (let i=0; i<selectedTasks.length; i++){
+   const response = await axios.patch(`http://localhost:8000/completed/tasks/${selectedTasks[i]}`,
+   {
+    completed:true
     
     })
     const updatedTasks = await response.data.updatedTasks
-  
+    console.log(updatedTasks)
     setCompletedTasks(prevCompletedTasks => [...prevCompletedTasks, ...updatedTasks])
     setTasks(prevTasks => prevTasks.filter(task => !selectedTasks.includes(task)) )
-    console.log(updatedTasks)
+   
     setSelectedTasks([])
+   }
+ 
     
   }
+
+  console.log(selectedTasks)
 
   function TodoContainer() {
     return (
@@ -113,7 +112,7 @@ function App() {
         <Input currentTask={currentTask} setCurrentTask={setCurrentTask} submitTask={submitTask}/>
         <Logout setTasks={setTasks}/>
         <div className='tasks-container'> 
-          <IncompleteTasks handleTaskSelection={handleTaskSelection} tasks={tasks} deleteTasks={deleteTasks} markComplete={markComplete}/>
+          <IncompleteTasks selectedTasks={selectedTasks} setSelectedTasks={setSelectedTasks} tasks={tasks} deleteTasks={deleteTasks} markComplete={markComplete}/>
           <CompleteTasks deleteTasks={deleteTasks} markComplete={markComplete} completedTasks={completedTasks}/>
         </div>
       </>

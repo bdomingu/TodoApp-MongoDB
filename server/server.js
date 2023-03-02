@@ -6,7 +6,7 @@ import passport from 'passport';
 import jwt from 'jsonwebtoken';
 import LocalStrategy from 'passport-local';
 import session from 'express-session';
-import MongoStore from 'connect-mongo';
+
 
 const secret = 'ilovepickles1235';
 
@@ -124,7 +124,7 @@ app.post('/login', (req, res, next) => {
     passport.authenticate('local', {session: false}, (err, user, info) => {
         if (err || !user){
             return res.status(401).json({
-                message: 'Invalid username or password'
+                message: 'Invalid email or password'
         });
     }
     req.login(user, {session: false}, (err) => {
@@ -223,9 +223,10 @@ app.delete('/delete/task/:id', (req, res) => {
     });
 });
 
-app.patch('/completed/tasks', async (req, res) => {
+app.patch('/completed/tasks/:ids', async (req, res) => {
+    
     try {
-    const taskIds = req.body.taskIds
+    const taskIds = req.params.ids
     const completed = req.body.completed;
 
     const result = await Todo.updateMany(
@@ -261,7 +262,3 @@ app.listen(8000, () => {
     console.log(`Server is running on port 8000.`);
 });
 
-
-/* Need to figure out how to logout a user 
-    Need to figure out how to redirect users to the correct pages once a user is logged in/out
-    Might need to look at doing that from the client side instead of the server side. */
