@@ -6,7 +6,9 @@ import passport from 'passport';
 import jwt from 'jsonwebtoken';
 import LocalStrategy from 'passport-local';
 import session from 'express-session';
+import dotenv from 'dotenv'
 
+dotenv.config()
 
 const secret = 'ilovepickles1235';
 
@@ -205,7 +207,6 @@ app.post('/tasks/create', authenticateToken, (req, res) => {
         if (error) {
             res.send(error);
         } else {
-            console.log(data)
             res.status(200).send(data);
         }
     });

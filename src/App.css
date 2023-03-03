@@ -12,17 +12,15 @@ body {
   text-align: center;
   margin-top: 10px;
 }
+
 .form-input {
-  width: 200px;
+  width: 250px;
   height: 25px;
   border: none;
   background-color: rgb(255,255,255);
   border-radius: 10px;
   text-align:start;
   padding-left: 10px;
-
-  /* margin: 20px auto; */
-  /* display: block; */
 }
 
 .form-input:focus {
@@ -64,7 +62,7 @@ body {
 }
 
 h1 {
-  color:rgb(66, 85, 43);
+  color:rgb(24, 34, 13);
   padding-left:40px ;
   margin: 0 auto;
   width: 50%;
@@ -101,6 +99,109 @@ li {
   color: rgb(33, 39, 26);
 }
 
+
+.login-container{
+background-color: rgb(255,255,255);
+width: 400px;
+height: 400px;
+margin: 100px auto;
+border-radius: 5px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-text {
+  text-align: center;
+  color:rgb(40, 58, 19)
+}
+
+.login-text a {
+  color: rgb(122, 109, 96);
+}
+
+label{
+  padding: 15px;
+  color:rgb(40, 58, 19);
+}
+
+.email-input{
+  width: 260px;
+  height: 30px;
+  margin-left: 10px;
+  border: none;
+  background-color: rgb(207,179,153);
+  border-radius: 10px;
+  padding-left: 10px;
+}
+
+.email-input:focus {
+  outline: none;
+}
+.password-input {
+  width: 200px;
+  height: 30px;
+  margin-left: 10px;
+  border: none;
+  background-color: rgb(207,179,153);
+  border-radius: 10px;
+  padding-left: 10px;
+}
+
+.name-input {
+  width: 200px;
+  height: 30px;
+  margin-left: 10px;
+  border: none;
+  background-color: rgb(207,179,153);
+  border-radius: 10px;
+  padding-left: 10px;
+}
+
+.password-input:focus {
+  outline: none;
+}
+
+.login-button {
+  background-color: rgb(33, 39, 26);
+  width: 20%;
+  height: 30px;
+  border-radius: 5px;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  margin: 0 auto;
+  color: rgb(207,179,153);
+  
+}
+
+.password-label {
+  margin-left: -30px;
+}
+
+.name-label {
+  margin-left: -50px;
+}
+
+.logout-button {
+  margin-top: 20px;
+  color: rgb(255,255,255);
+  text-decoration: none;
+}
+
+.logout-button:hover {
+  text-decoration: underline;
+}
+
+.nav{
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 250px;
+}
+
 @media (max-width:767px){
   .tasks-container {
     flex-direction: column;
@@ -120,12 +221,41 @@ li {
     height: 300px;
     overflow-y: scroll; 
   }
+
+  
+  .nav{
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+  }
+
+
+  .form-input {
+    width: 200px;
+    height: 35px;
+    border: none;
+    background-color: rgb(255,255,255);
+    border-radius: 10px;
+    text-align:start;
+    padding-left: 10px;
+  }
+ 
+  .login-container{
+    background-color: rgb(255,255,255);
+    width: 300px;
+    height: 400px;
+    margin: 90px auto;
+    border-radius: 5px;
+    }
+
+    .password-label {
+      margin-left: -10px;
+    }
+
+    .name-label {
+      margin-left: 10px;
+    }
+    
+    
 }
-
-
-
-
-
-
-
-

@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom'
 
-
-
 function Login({setToken}) {
    
     // const [error, setError] = useState('');
@@ -14,8 +12,6 @@ function Login({setToken}) {
     const navigate = useNavigate();
 
     
-
-
 
     const handleLogin = async (e) => {
         e.preventDefault()
@@ -40,34 +36,38 @@ function Login({setToken}) {
         }
     }
    
-    console.log(loginError)
 
   return (
     <>
-   
-      <div>
+      <div className='login-container'>
         <h1>Login</h1>
-        <form onSubmit={handleLogin}>
-            <label> Email:
+        <form className='form-container'
+         onSubmit={handleLogin}>
+            <label className='label'> Email:
                 <input
+                    className='email-input'
                     type='text'
                     placeholder='Enter your email'
                     value={userEmail}
                     onChange={(e) => setUserEmail(e.target.value)}
                 />
             </label>
-            <label> Password:
-                <input 
+            <label className='password-label'> Password:
+                <input
+                    className='password-input' 
                     type='password'
                     placeholder='Enter your password'
                     value={userPassword}
                     onChange={(e) => setUserPassword(e.target.value)}
                 />
             </label>
-            <button type='submit'>Login</button>
+            <button className='login-button' type='submit'>Login</button>
         </form>
+        <div className='login-text'>
         <p>{loginError}</p>
-        <p>Don't have an account?</p> <a href='/register'>Register here.</a>
+        <p>Don't have an account? <a href='/register'>Register here.</a></p> 
+        
+        </div>
     </div>
     </>
   )

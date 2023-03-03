@@ -96,7 +96,7 @@ function App() {
     
     })
     const updatedTasks = await response.data.updatedTasks
-    console.log(updatedTasks)
+    
     setCompletedTasks(prevCompletedTasks => [...prevCompletedTasks, ...updatedTasks])
     setTasks(prevTasks => prevTasks.filter(task => !selectedTasks.includes(task._id)) )
    
@@ -111,8 +111,10 @@ function App() {
   function TodoContainer() {
     return (
       <>
+        <div className='nav'>
         <Input currentTask={currentTask} setCurrentTask={setCurrentTask} submitTask={submitTask}/>
         <Logout setTasks={setTasks}/>
+        </div>
         <div className='tasks-container'> 
           <IncompleteTasks selectedTasks={selectedTasks} setSelectedTasks={setSelectedTasks} tasks={tasks} deleteTasks={deleteTasks} markComplete={markComplete}/>
           <CompleteTasks deleteTasks={deleteTasks} markComplete={markComplete} completedTasks={completedTasks}/>

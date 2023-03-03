@@ -41,12 +41,13 @@ function Register() {
  
   return (
     
-         <div>
+         <div className='login-container'>
           <h1>Register</h1>
-          <form onSubmit={handleRegister}>
-              <label>
+          <form className='form-container' onSubmit={handleRegister}>
+              <label className='name-label'>
                   Name:
                   <input
+                      className='name-input'
                       type='text'
                       placeholder='Enter your name...'
                       value={username}
@@ -56,24 +57,27 @@ function Register() {
               <label>
                   Email:
                   <input
+                      className='email-input'
                       type='text'
                       placeholder='Enter an email...'
                       value={email}
                       onChange={(e) => setEmail(e.target.value)} />
               </label>
 
-              <label>
+              <label className='password-label'>
                   Password:
                   <input
+                      className='password-input'
                       type='password'
                       placeholder='Enter a password...'
                       value={password}
                       onChange={(e) => setPassword(e.target.value)} />
               </label>
-              <button type='submit'>Register</button>
-              <p>{registrationError}</p>
-              <p>Already have an account?</p> <a href='/'>Login Here</a>
-
+              <button className='login-button' type='submit'>Register</button>
+              <div className='login-text'>
+                <p>{registrationError}</p>
+                <p>Already have an account?</p> <a href='/'>Login Here</a>
+              </div>
           </form>
       </div>
 

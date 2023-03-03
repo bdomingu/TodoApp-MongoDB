@@ -18,7 +18,7 @@ function Logout({setTasks}) {
 
   return (
     <div>
-        <button onClick={handleLogout}>Logout</button>
+        <a href='#' className='logout-button' onClick={handleLogout}>Logout</a>
     </div>
   )
 }
