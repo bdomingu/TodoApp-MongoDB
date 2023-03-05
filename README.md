@@ -16,12 +16,15 @@ Open your web browser and go to http://localhost:3000 to view the app.
 
 ### **How to Use**
 Adding Tasks
+
 To add a new task, simply type the task into the input field at the top of the page and press the "Enter" key or click the "Add" button.
 
 Marking Tasks as Completed
+
 To mark a task as completed, click the checkbox next to the task, then click the complete button and the task will be added to the "Done" section.
 
 Deleting Tasks
+
 To delete a task, click the trash button next to the task. The task will be removed from the list(s).
 
 ## **Technologies Used**
