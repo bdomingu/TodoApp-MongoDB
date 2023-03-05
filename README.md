@@ -14,7 +14,7 @@ Start the server using npm start.
 
 Open your web browser and go to http://localhost:3000 to view the app.
 
-How to Use
+### **How to Use**
 Adding Tasks
 To add a new task, simply type the task into the input field at the top of the page and press the "Enter" key or click the "Add" button.
 
