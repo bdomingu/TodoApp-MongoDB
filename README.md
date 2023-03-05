@@ -4,7 +4,7 @@ This is a simple Todo app built with React, JavaScript, Express, and MongoDB. Th
 ## **Getting Started**
 To run the app, you will need to have Node.js and MongoDB installed on your machine. Once you have those installed, follow these steps:
 
-Clone the repository to your local machine using git clone https://github.com/your-username/react-todo-app.git.
+Clone the repository to your local machine using git clone https://github.com/your-username/TodoApp-MongoDB.git
 
 Navigate to the project directory using cd react-todo-app.
 
