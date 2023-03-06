@@ -6,14 +6,16 @@ import passport from 'passport';
 import jwt from 'jsonwebtoken';
 import LocalStrategy from 'passport-local';
 import session from 'express-session';
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
-const secret = 'ilovepickles1235';
+
+const secret = process.env.SECRET_KEY;
 
 
 const app = express();
+
 
 app.use(cors());
 app.use(express.json());
@@ -27,6 +29,8 @@ db.on('error', console.error.bind(console, 'MongoDB connection error'));
 db.once('open', function() {
     console.log('Connected to MongoDB')
 });
+
+
 
 /////////////////////////////////////Register Section///////////////////////////////////////////////
 const userSchema = new mongoose.Schema({
@@ -59,6 +63,12 @@ app.post('/register', async (req, res) => {
 
         if (user) {
             return res.status(400).send({error:'Email already exists'});
+        }
+        if (!password) {
+            return res.status(400).send({error: 'Please enter a password'})
+        }
+        if (!email) {
+            return res.status(400).send({error: 'Please enter an email'})
         }
 
         user = new User({
@@ -151,10 +161,10 @@ app.get('/logout', (req, res) => {
 //////////////////////////// Authentication /////////////////////////////////////
  
 const authenticateToken = (req, res, next) => {
-
+    
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
-  
+    
     if (token === null) return res.sendStatus(401);
 
     jwt.verify(token, secret, (err, user) => {
@@ -247,21 +257,8 @@ app.patch('/completed/tasks/:ids', async (req, res) => {
         res.status(500).json({error: "Error updating tasks"})
     }
 })
-// app.patch('/completed/tasks/:id', (req, res) => {
-//     const taskId = req.params.id
-//     const updatedTask = {completed: req.body.completed};
 
-//     Todo.findByIdAndUpdate(taskId, updatedTask, {new: true})
-//         .then((task) => {
-//             if (!task) {
-//                 return res.status(404).json({success: false, message: "Task not found"});
-//             }
-//             return res.status(200).json({success: true, task});
-//         })
-//         .catch((err) => {
-//             return res.status(500).json({success: false, message: err.message});
-//         });
-// });
+
 
 app.listen(8000, () => {
     console.log(`Server is running on port 8000.`);

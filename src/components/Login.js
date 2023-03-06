@@ -30,7 +30,7 @@ function Login({setToken}) {
             navigate('/todos')
         }
         
-        console.log(token)
+        
         } catch (error) {
             setLoginError(error.response.data.message)
         }

@@ -1,0 +1,4 @@
+runtime: nodejs14
+
+secrets:
+SECRET_KEY: token
