@@ -20,7 +20,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const mongoDB = 'mongodb://betty:betty@localhost:27017/todoApp';
+const mongoDB = process.env.MONGO_URI;
 mongoose.connect(mongoDB, {useNewUrlParser: true});
 
 const db = mongoose.connection;

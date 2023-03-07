@@ -1,10 +1,33 @@
 runtime: nodejs16
+env: flex
+
 handlers:
-  # Serve all static files with url ending with a file extension
-  - url: /(.*\..+)$
-    static_files: build/\1
-    upload: build/(.*\..+)$
-  # Catch all handler to index.html
-  - url: /.*
-    static_files: build/index.html
-    upload: build/index.html
+- url: /
+  static_files: build/index.html
+  upload: build/index.html
+
+- url: /(.*)
+  static_files: build/\1
+  upload: build/(.*)
+
+- url: /register/.*
+  script: auto
+
+- url: /login/.*
+  script: auto
+
+- url: /logout/.*
+  script: auto
+
+
+- url: /tasks/.*
+  script: auto
+
+
+- url: /completed/tasks/.*
+  script: auto
+
+
+env_variables:
+  MONGO_URI: 'mongodb://betty:betty@localhost:27017/todoApp'
+  SECRET_KEY: 'ilovepickles1235'
