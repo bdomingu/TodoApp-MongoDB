@@ -30,12 +30,14 @@
     "zlib": "^1.0.5"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=8080 react-scripts start",
+    "prod": "",
     "build": "react-scripts build",
     "test": "mocha 'src/**/*.test.js'",
     "eject": "react-scripts eject",
     "coverage": "jest --coverage"
   },
+  
   "eslintConfig": {
     "extends": [
       "react-app",

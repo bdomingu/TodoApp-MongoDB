@@ -9,18 +9,13 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Logout from './components/Logout';
 import Register from './components/Register';
 
-/* 
-    
-    Style?
-    Figure out the env for secret key for token
-*/
-
 function App() {
   const [tasks, setTasks] = useState([]);
   const [completedTasks, setCompletedTasks] = useState([]);
   const [currentTask, setCurrentTask] = useState('');
   const [selectedTasks, setSelectedTasks] = useState([]);
   const [token, setToken] = useState(localStorage.getItem('token'))
+  axios.defaults.baseURL = `http://${window.location.hostname}:8000`
   
 
 
@@ -29,7 +24,7 @@ function App() {
   const displayTasks = async () => {
   
     try {
-      const response = await axios.get('http://localhost:8000/tasks', {
+      const response = await axios.get('/tasks', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -61,7 +56,7 @@ function App() {
     
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-     axios.post('http://localhost:8000/tasks/create', task).then((response) =>{
+     axios.post('/tasks/create', task).then((response) =>{
       const data = response.data
       setTasks([...tasks, data])
       setCurrentTask('')
@@ -72,7 +67,7 @@ function App() {
   }
 
   const deleteTasks = (id) => {
-    axios.delete(`http://localhost:8000/delete/task/${id}`).then(response => {
+    axios.delete(`/delete/task/${id}`).then(response => {
       setTasks(prevTasks => {
         return prevTasks.filter(task => task._id !== id)
       })
@@ -90,7 +85,7 @@ function App() {
   const markComplete = async () => {
     
    for (let i=0; i<selectedTasks.length; i++){
-   const response = await axios.patch(`http://localhost:8000/completed/tasks/${selectedTasks[i]}`,
+   const response = await axios.patch(`/completed/tasks/${selectedTasks[i]}`,
    {
     completed:true
     

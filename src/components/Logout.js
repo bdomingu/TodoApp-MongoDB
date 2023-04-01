@@ -2,6 +2,7 @@ import axios from "axios"
 import {useNavigate} from 'react-router-dom'
 
 function Logout({setTasks}) {
+    axios.defaults.baseURL = `http://${window.location.hostname}:8000`
     const navigate = useNavigate();
     
     const handleLogout = async () => {
@@ -9,7 +10,7 @@ function Logout({setTasks}) {
         localStorage.removeItem('token');
         console.log(localStorage.getItem('token'))
         setTasks([])
-       const response = await axios.get('http://localhost:8000/logout')
+       const response = await axios.get('/logout')
        console.log(response.data)
        if (response.status === 200) {
             navigate('/')

@@ -4,7 +4,7 @@ import {useNavigate} from 'react-router-dom'
 
 function Login({setToken}) {
    
-    // const [error, setError] = useState('');
+    axios.defaults.baseURL = `http://${window.location.hostname}:8000`
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
     const [loginError, setLoginError] = useState('')
@@ -21,7 +21,7 @@ function Login({setToken}) {
             password: userPassword
         }
 
-        const response = await axios.post('http://localhost:8000/login', registeredUser)
+        const response = await axios.post('/login', registeredUser)
         const token = response.data.token
     
         localStorage.setItem('token', token);

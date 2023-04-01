@@ -3,6 +3,7 @@ import axios from 'axios';
 import {useNavigate} from 'react-router-dom'
 
 function Register() {
+    axios.defaults.baseURL = `http://${window.location.hostname}:8000`
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -10,7 +11,7 @@ function Register() {
 
     const navigate = useNavigate();
 
-    const url = 'http://localhost:8000';
+    const url = '';
 
     const handleRegister = (e) => {
         e.preventDefault()
